@@ -14,7 +14,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'sentenceCase' })
 export class SentenceCasePipe implements PipeTransform {
   transform(value: string) {
-    if (value.length < 1) {
+    if (!value || value.length < 1) {
       return value;
     } else {
       return value.charAt(0).toUpperCase() + value.substring(1);

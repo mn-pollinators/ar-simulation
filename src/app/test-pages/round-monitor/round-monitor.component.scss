@@ -1,0 +1,36 @@
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.student-card {
+  width: 300px;
+  margin: 8px;
+}
+.interaction-list {
+  padding-top: 0;
+  height: 88*2.1px;
+  overflow-y: scroll;
+  .mat-list-item {
+    //animation: fadeIn ease 500ms;
+  }
+}
+.mat-subheading-2 {
+  margin-bottom: 4px;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+td {
+  text-align:center;
+  width: 33%;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 8px;
+}

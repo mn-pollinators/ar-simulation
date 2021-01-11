@@ -1,0 +1,44 @@
+<app-hill-background cover></app-hill-background>
+<div class="list-container">
+  <mat-card *ngFor="let student of students$ | async" class="student-card">
+    <mat-card-header>
+      <img *ngIf="student.bee" mat-card-avatar src="/assets/art/500w/bees/{{student.bee?.art_file}}">
+      <mat-card-title>{{student.name}}</mat-card-title>
+      <mat-card-subtitle>{{student.bee?.name | sentenceCase}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Nest Barcode: {{student.nestBarcode}}</p>
+      <p>Bee {{student.beeActive ? '✔️ Active' : '❌ Inactive'}}</p>
+      <h3 class="mat-subheading-2">Pollen</h3>
+      <table>
+        <tr>
+          <th>Current</th>
+          <th>Nest</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+          <td>
+              <mat-icon
+                inline
+                color='accent'
+                *ngFor="let pollenCount of [1,2,3]"
+              >
+              {{ pollenCount <= student.currentPollen ? 'lens' : 'panorama_fish_eye' }}
+            </mat-icon>
+          </td>
+          <td>{{student.totalPollen - student.currentPollen}}</td>
+          <td>{{student.totalPollen}}</td>
+        </tr>
+      </table>
+      <h3 class="mat-subheading-2">Interactions</h3>
+      <mat-list class="interaction-list">
+        <mat-list-item *ngFor="let interaction of student.interactions; trackBy:trackInteractions">
+          <img matListAvatar [src]="interaction.isNest ? '/assets/art/512-square/nests/' + student.bee?.nest_type?.art_file : '/assets/art/512-square/flowers/' + interaction.flower?.art_file">
+          <h3 matLine>{{(interaction.isNest ? student.bee.nest_type?.name : interaction.flower?.name) | sentenceCase}}</h3>
+          <p matLine>{{interaction.timePeriod.toString()}} ({{interaction.timePeriod.time}})</p>
+          <p matLine>Barcode {{interaction.barcodeValue}}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
