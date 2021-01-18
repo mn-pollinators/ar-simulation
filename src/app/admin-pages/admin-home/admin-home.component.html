@@ -1,0 +1,36 @@
+<div class="centered-container">
+  <div class="card-container">
+    <mat-card>
+      <mat-card-title>Welcome to Buzz About Admin</mat-card-title>
+      <mat-card-content>
+        <p>This section of Buzz About contains administration tools.</p>
+        <p *ngIf="adminService.auth.user | async as user">
+          You are currently signed in as {{user.displayName}} ({{user.email}})
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Version Info</mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <div mat-line>Buzz About v{{buzzAboutInfo.version}}</div>
+            <div mat-line><code>{{buzzAboutInfo.git.hash}} <span *ngIf="buzzAboutInfo.git.tag">({{buzzAboutInfo.git.tag}})</span></code></div>
+          </mat-list-item>
+          <mat-list-item>
+            <div mat-line>Assets v{{assetsInfo.version}}</div>
+          </mat-list-item>
+          <mat-list-item>
+            <div mat-line>Service worker {{updates.isEnabled ? 'enabled' : 'disabled'}}</div>
+            <button mat-icon-button *ngIf="updates.isEnabled" (click)="updates.checkForUpdate()" title="Check for updates">
+              <mat-icon>update</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="updates.isEnabled && (updates.available | async)" (click)="applyUpdate()" title="Apply update and refresh">
+              <mat-icon>get_app</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

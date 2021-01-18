@@ -67,6 +67,9 @@ export const otherUser = getAuthedFirestore({uid: 'otheruser'});
 // noAuth is an unauthenticated user
 export const noAuth = getAuthedFirestore(null);
 
+// adminUser is a user with the admin claim
+export const adminUser = getAuthedFirestore({uid: 'adminuser', admin: true});
+
 
 /* These are some utility functions for manipulating firestore. */
 

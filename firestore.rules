@@ -135,5 +135,13 @@ service cloud.firestore {
       allow list: if validAuth() && isResourceTeacher();
 
     }
+
+    function isAdmin() {
+      return ("admin" in request.auth.token) && request.auth.token.admin == true;
+    }
+
+    match /{document=**} {
+      allow read, write: if validAuth() && isAdmin();
+    }
   }
 }

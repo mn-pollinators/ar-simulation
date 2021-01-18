@@ -1,0 +1,26 @@
+<div class="centered-container">
+  <div class="card-container">
+    <mat-card>
+      <mat-card-title>Sessions</mat-card-title>
+      <mat-card-content>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let session of sessions$ | async">
+            <a matLine [routerLink]="['sessions', session.id]">{{session.id}}</a>
+            <div matLine>Created {{session.createdAt | timeAgo}} | {{session.currentRoundId ? 'In round' : 'Not in round'}}</div>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Active Join Codes</mat-card-title>
+      <mat-card-content>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let joinCode of adminService.activeJoinCodes$ | async">
+            <a matLine [routerLink]="['sessions', joinCode.sessionId]">{{ joinCode.id | slice:0:3 }}&nbsp;{{ joinCode.id | slice:3:6 }}</a>
+            <div matLine>Session: {{joinCode.sessionId}}</div>
+            <div matLine>Updated {{joinCode.updatedAt | timeAgo}}</div>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </div>

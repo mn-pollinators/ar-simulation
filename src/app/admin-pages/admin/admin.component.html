@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+ <a routerLink="/" class="toolbar-icon"><img src="/assets/icons/icon-circle.svg"></a>
+ <button mat-button routerLink="/admin" routerLinkActive="mat-accent" [routerLinkActiveOptions]="{exact:
+  true}">Admin</button>
+ <button mat-button routerLink="sessions" routerLinkActive="mat-accent">Sessions</button>
+ <span fxFlex></span>
+ <button mat-button (click)="signOutButton()">Sign Out</button>
+</mat-toolbar>
+<div class="container">
+  <app-hill-background cover class="admin-background"></app-hill-background>
+  <router-outlet></router-outlet>
+</div>
+

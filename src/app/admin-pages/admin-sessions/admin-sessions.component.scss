@@ -1,0 +1,15 @@
+.card-container {
+  display: flex;
+  .mat-card:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.mat-card {
+}
+
+.mat-nav-list {
+  height: 70vh;
+  padding-top: 0;
+  overflow-y: scroll;
+}

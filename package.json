@@ -13,7 +13,8 @@
     "cy:open": "cross-env FIRESTORE_EMULATOR_HOST=localhost:8080 cypress open",
     "firebase:emulator": "firebase emulators:start --only firestore --import firebase-test-data",
     "firestore-specs": "jasmine-ts --project=firestore-tests/tsconfig.json --config=firestore-tests/support/jasmine.json",
-    "test-firestore": "firebase emulators:exec --only firestore \"npm run firestore-specs\""
+    "test-firestore": "firebase emulators:exec --only firestore \"npm run firestore-specs\"",
+    "set-admin": "node set-admin.js"
   },
   "repository": {
     "type": "git",
