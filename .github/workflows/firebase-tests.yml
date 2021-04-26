@@ -3,7 +3,20 @@ name: Firebase Tests
 on: [push]
 
 jobs:
+  pre-job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          paths_ignore: '["**.md", "docs/**", "cypress/**", "src/**/*.spec.ts"]'
+          cancel_others: true
+
   firestore-tests:
+    needs: pre-job
+    if: ${{ needs.pre-job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
