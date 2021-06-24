@@ -49,7 +49,7 @@
     "rxjs": "~6.5.3",
     "screenfull": "^5.1.0",
     "studio-backend": "github:AR-js-org/studio-backend#v0.21.0",
-    "three": "^0.122.0",
+    "three": "^0.125.0",
     "tslib": "^1.10.0",
     "typeface-roboto": "^1.1.13",
     "zone.js": "~0.10.2"
