@@ -7,7 +7,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { JsonDataTestComponent } from './test-pages/json-data-test/json-data-test.component';
 import { SessionTestComponent } from './test-pages/session-test/session-test.component';
 import { RoundTemplateTestComponent } from './test-pages/round-template-test/round-template-test.component';
-import { PrepareRoundTestComponent } from './test-pages/prepare-round-test/prepare-round-test.component';
 import { JoinSessionComponent } from './pages/join-session/join-session.component';
 import { HostSessionComponent } from './pages/host-session/host-session.component';
 import { TestPagesComponent } from './pages/test-pages/test-pages.component';
@@ -19,7 +18,6 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 const testRoutes: Routes = [
   {path: 'timer-test', component: TimerTestComponent},
   {path: 'json-data-test', component: JsonDataTestComponent},
-  {path: 'prepare-round-test', component: PrepareRoundTestComponent},
   {path: 'session-test', component: SessionTestComponent},
   {path: 'round-template-test', component: RoundTemplateTestComponent},
   {path: 'flower-test', component: FlowerTestComponent},

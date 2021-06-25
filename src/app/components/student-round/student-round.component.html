@@ -28,6 +28,45 @@
         </mat-card-actions>
       </mat-card>
 
+      <ng-container *ngSwitchCase="ScreenId.PreRound" class="inactive-bee">
+        <mat-card *ngIf="(roundService.currentBeeSpecies$ | async) as bee">
+            <img
+              class="student-bee"
+              [src]="bee.asset_urls.art_500_wide"
+              [alt]="bee.name"
+            >
+            <mat-card-title>
+              You are a {{bee.name}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Your nest is {{bee.nest_type.name}}
+            </mat-card-subtitle>
+            <mat-card-actions>
+              <button mat-raised-button color="accent" (click)="onOpenFieldGuide()">View Field Guide</button>
+            </mat-card-actions>
+        </mat-card>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="ScreenId.PostRound">
+        <mat-card>
+          <mat-card-title>You collected {{roundService.totalPollen$ | async}} pollen</mat-card-title>
+          <mat-card-content>
+            <ul>
+              <li *ngFor="let flower of roundService.pollenByFlowerSpeciesFiltered$ | async">{{flower.species.name}}: {{flower.pollenCount}} pollen</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+
+      </ng-container>
+
+
+      <mat-card *ngSwitchDefault>
+        <mat-card-title>
+          Loading Round&hellip;
+        </mat-card-title>
+        <mat-spinner></mat-spinner>
+      </mat-card>
+
     </div>
   </ng-container>
 </ng-container>

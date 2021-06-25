@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { Subject, Observable, interval, of, concat } from 'rxjs';
-import { scan, switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
+import { scan, switchMap, map, distinctUntilChanged, shareReplay, take, filter } from 'rxjs/operators';
 import { Month, TimePeriod } from '../time-period';
 
 interface TimerState {
@@ -21,6 +21,8 @@ interface TimerState {
    * The time in ms to stop the timer.
    */
   endTimeMs: number;
+
+  done: boolean;
 }
 
 /**
@@ -69,6 +71,9 @@ export class TimerService {
    */
   running$: Observable<boolean>;
 
+
+  done$: Observable<boolean>;
+
   constructor() {
     this.timerState$ = this.events$.pipe(
       scan((state: TimerState, nextEvent: Partial<TimerState>): TimerState => ({ ...state, ...nextEvent })),
@@ -86,7 +91,7 @@ export class TimerService {
                 // When we get to the end, stop the timer.
                 if (state.currentMs >= state.endTimeMs) {
                   state.currentMs = state.endTimeMs;
-                  this.setRunning(false);
+                  this.endRound();
                 }
               }),
               map(() => Object.assign({}, state)),
@@ -135,6 +140,13 @@ export class TimerService {
       shareReplay(1),
     );
     this.running$.subscribe(() => {});
+
+    this.done$ = this.timerState$.pipe(
+      map(state => state.done),
+      distinctUntilChanged((prev, curr) => prev === curr),
+      shareReplay(1),
+    );
+    this.done$.subscribe(() => {});
   }
 
   /**
@@ -188,7 +200,8 @@ export class TimerService {
       endTimeMs: (endTime.time + 1) * tickSpeed, // saves us a bit of math in the main timer loop
       currentMs: startTime.time * tickSpeed,
       tickSpeed,
-      running
+      running,
+      done: false
     };
 
     this.events$.next(initialState);
@@ -201,6 +214,10 @@ export class TimerService {
    */
   setRunning(running: boolean) {
     this.events$.next({running});
+  }
+
+  endRound() {
+    this.events$.next({running: false, done: true});
   }
 
   /**

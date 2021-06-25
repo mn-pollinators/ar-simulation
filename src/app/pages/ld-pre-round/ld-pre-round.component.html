@@ -1,0 +1,26 @@
+<app-hill-background cover></app-hill-background>
+<div class="centered-container">
+  <div *ngIf="roundTemplate$ | async as roundTemplate" class="round-cards">
+    <mat-card>
+      <mat-card-title>
+        {{roundTemplate.name}}
+      </mat-card-title>
+      <mat-card-content>
+        {{roundTemplate.description}}
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Bees in this round
+      </mat-card-title>
+      <mat-card-content>
+        <div class="bee-list">
+          <div *ngFor="let bee of roundTemplate.bees" class="bee-list-item">
+            <img [src]="bee.asset_urls.art_500_wide">
+            <div class="bee-name">{{bee.name | titlecase}}</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

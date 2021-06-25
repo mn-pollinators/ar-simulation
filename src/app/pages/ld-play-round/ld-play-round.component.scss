@@ -1,0 +1,27 @@
+@use "../../../variables" as *;
+
+:host {
+  background-color: mat-color($primary);
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+app-flower-layout {
+  display: block;
+  width: 100%;
+}
+
+app-timer-progress-spinner {
+  position: absolute;
+  display: block;
+  left: 40px;
+  top: 40px;
+}
+
+app-timer-progress-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}

@@ -4,12 +4,14 @@ import * as firebase from 'firebase/app';
 import firestore = firebase.firestore;
 
 
+export type RoundStatus = 'preRound' | 'playRound' | 'postRound';
+
 /**
  * The round data as stored in Firebase.
  */
 export interface FirebaseRound {
   flowerSpeciesIds: string[];
-  status: string;
+  status: RoundStatus;
   running: boolean;
   currentTime: number;
 }

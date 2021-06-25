@@ -1,0 +1,13 @@
+<app-hill-background cover></app-hill-background>
+<div class="centered-container">
+  <mat-card>
+    <mat-card-title>
+      The bees collected {{teacherRoundService.averagePollenCount$ | async}} pollen average ({{teacherRoundService.pollenCount$ | async}} total)
+    </mat-card-title>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let bee of teacherRoundService.pollenCountByBeeSpecies$ | async">{{bee.species.name}}: {{bee.averagePollenCount}} pollen average ({{bee.pollenCount}} total)</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

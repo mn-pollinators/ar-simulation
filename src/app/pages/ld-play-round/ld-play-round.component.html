@@ -1,0 +1,18 @@
+<app-timer-progress-bar
+  *ngIf="teacherRoundService.roundTemplate$ | async as template"
+  [currentTimePrecise]="timerService.currentTimePrecise$ | async"
+  [currentMonth]="timerService.currentMonth$ | async"
+  [startMonth]="template.startTime.month"
+  [endMonth]="template.endTime.month"
+>
+</app-timer-progress-bar>
+
+<app-flower-layout-with-bees [flowers]="flowerLayoutItems$ | async" [bees]="beeLayoutItems$ | async"></app-flower-layout-with-bees>
+
+<app-timer-progress-spinner
+  *ngIf="teacherRoundService.roundTemplate$ | async as template"
+  [currentTimePrecise]="timerService.currentTimePrecise$ | async"
+  [startTime]="template.startTime"
+  [endTime]="template.endTime"
+>
+</app-timer-progress-spinner>

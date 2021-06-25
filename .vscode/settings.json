@@ -99,5 +99,6 @@
     "firerules"
   ],
   "markdown.extension.toc.levels": "2..6",
-  "typescript.preferences.quoteStyle": "single"
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

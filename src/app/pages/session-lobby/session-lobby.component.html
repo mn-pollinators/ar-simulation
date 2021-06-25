@@ -64,6 +64,6 @@
 
 <app-bottom-bar>
   <button left mat-raised-button color="accent" (click)="quitSession()">Quit Session</button>
-  <button center mat-raised-button color="accent" (click)="openRoundDialog()" [disabled]="(loading$ | async)">Start Round</button>
+  <button center mat-raised-button color="accent" (click)="openRoundDialog()" [disabled]="(loading$ | async)">Choose Round</button>
   <button right mat-button (click)="showFieldGuide()" [disabled]="(loading$ | async) || (showFieldGuide$ | async)">Show Field Guide</button>
 </app-bottom-bar>

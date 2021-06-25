@@ -8,6 +8,8 @@ import { StudentRoundService } from 'src/app/services/student-round.service';
 import { FieldGuideDialogComponent } from '../field-guide-dialog/field-guide-dialog.component';
 
 enum ScreenId {
+  PreRound,
+  PostRound,
   Play,
   InactiveBee,
   Paused
@@ -25,12 +27,24 @@ export class StudentRoundComponent implements OnInit {
 
   readonly ScreenId = ScreenId;
 
-  currentScreen$: Observable<ScreenId> = this.roundService.currentRunning$.pipe(
-    switchMap(running =>
-      running
-      ? this.roundService.currentBeeActive$.pipe(map(active => active ? ScreenId.Play : ScreenId.InactiveBee))
-      : of(ScreenId.Paused)
-    ),
+  currentScreen$: Observable<ScreenId> = this.roundService.currentRound$.pipe(
+    filter(round => !!round),
+    distinctUntilChanged((x, y) => x.running === y.running && x.status === y.status),
+    switchMap(({status, running}) => {
+      switch (status) {
+        case 'preRound': {
+          return of(ScreenId.PreRound);
+        }
+        case 'postRound': {
+          return of(ScreenId.PostRound);
+        }
+        default: {
+          return running
+          ? this.roundService.currentBeeActive$.pipe(map(active => active ? ScreenId.Play : ScreenId.InactiveBee))
+          : of(ScreenId.Paused);
+        }
+      }
+    }),
     distinctUntilChanged(),
     shareReplay(1)
   );
@@ -53,7 +67,7 @@ export class StudentRoundComponent implements OnInit {
       switchMap(dialog =>
         this.currentScreen$.pipe(
           takeUntil(dialog.afterClosed()),
-          filter(screen => screen !== ScreenId.InactiveBee),
+          filter(screen => screen !== ScreenId.InactiveBee && screen !== ScreenId.PreRound),
           take(1),
           tap(() => dialog.close())
         )

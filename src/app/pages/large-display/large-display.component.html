@@ -5,24 +5,21 @@
 
   <ng-container *ngSwitchCase="ScreenId.DuringTheRound">
     <div class="large-display-content during-the-round">
-      <app-timer-progress-bar
-        *ngIf="teacherRoundService.roundTemplate$ | async as template"
-        [currentTimePrecise]="timerService.currentTimePrecise$ | async"
-        [currentMonth]="timerService.currentMonth$ | async"
-        [startMonth]="template.startTime.month"
-        [endMonth]="template.endTime.month"
-      >
-      </app-timer-progress-bar>
-
-      <app-flower-layout-with-bees [flowers]="flowerLayoutItems$ | async" [bees]="beeLayoutItems$ | async"></app-flower-layout-with-bees>
-
-      <app-timer-progress-spinner
-        *ngIf="teacherRoundService.roundTemplate$ | async as template"
-        [currentTimePrecise]="timerService.currentTimePrecise$ | async"
-        [startTime]="template.startTime"
-        [endTime]="template.endTime"
-      >
-      </app-timer-progress-spinner>
+      <ng-container [ngSwitch]="roundStatus$ | async">
+        <app-ld-play-round  *ngSwitchCase="'playRound'"></app-ld-play-round>
+        <app-ld-pre-round *ngSwitchCase="'preRound'"></app-ld-pre-round>
+        <app-ld-post-round *ngSwitchCase="'postRound'"></app-ld-post-round>
+        <ng-container *ngSwitchDefault>
+          <div class="centered-container">
+            <mat-card>
+              <mat-card-title>
+                Loading Round&hellip;
+              </mat-card-title>
+              <mat-spinner></mat-spinner>
+            </mat-card>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
 
     <app-bottom-bar>
@@ -31,7 +28,7 @@
       </div>
 
       <div center>
-        <button mat-mini-fab color="accent" (click)="toggleTimerRunning()"
+        <button mat-mini-fab color="accent" (click)="toggleTimerRunning()" [disabled]="(this.roundStatus$ | async) === 'postRound'"
         >
           <mat-icon>
             {{(timerService.running$ | async) ? 'pause' : 'play_arrow'}}
